@@ -5,7 +5,7 @@ Assignment 1 */
 
 //The following is like importing libraries in python
 #include <iostream>     //gives printing and input (std::cout)
-#include <fstream>      //for reading files (std::ifstream)
+#include <vector>       //gives vectors (std::vector)
 
 //must let main{} know the functions exist:
 //it also contains other #include "libraries"
@@ -37,7 +37,8 @@ int main(){
         int n;
         std::cout << "How many lines of data would you like to print? " << std::endl;
         std::cin >> n;
-        printData(x,y,n);
+        //using print version 1
+        print(x,y,n);
     }
 
     else if (choice ==2){
@@ -45,14 +46,15 @@ int main(){
         std::vector<double> magnitudes = calculateMagnitudes(x,y);
         //then print them
         std::cout << "Magnitudes: " << std::endl;
-        for (size_t i=0; i<magnitudes.size(); i++){
-            std::cout << magnitudes[i] << std::endl;
-        }
+        //print version 2
+        print(magnitudes);
+        
      }
 
      else if (choice ==3){
         //empty variables that will be filled
         double p, q;        
+        //prints with version 3 inside
         fitLine(x,y,p,q);
      }
      

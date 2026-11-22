@@ -53,9 +53,22 @@ bool readData(std::string filename, std::vector<double>& x, std::vector<double>&
     return true;
 }
 
+//PRINT VERSION 1:
 //print the first n data points and if n is too big, give warning and print first 5
-void printData(std::vector<double> x, std::vector<double> y, int n){
+void print(std::vector<double> x, std::vector<double> y, int n){
 
+    //reject zero or negatives
+    if (n <= 0){
+        std::cout << "Please only enter a positive number of lines." << std::endl;
+        return;
+    }
+    
+    //static_cast makes both sides integers 
+    if (n>static_cast<int>(x.size())){
+        std::cout << "Warning: Only " << x.size() << " data points, printing the first 5." << std::endl;
+        n = 5;
+    }
+    
     if (n>x.size()){
         std::cout << "Warning: only " << x.size() << " data points, printing the frst 5." << std::endl;
         n = 5;
@@ -65,6 +78,20 @@ void printData(std::vector<double> x, std::vector<double> y, int n){
     for (int i = 0; i < n; i++){
         std::cout << x[i] << ", " << y[i] << std::endl;
     }
+}
+
+//PRINT VERSION 2
+//every value in a vector, one per line (magnitudes)
+void print(std::vector<double> values){
+    for (size_t i=0; i< values.size(); i++){
+        std::cout << values[i] << std::endl;
+    }
+}
+
+//PRINT VERSION 3
+//print single line of text (fit eq.)
+void print(std::string text){
+    std::cout << text << std::endl;
 }
 
 //calculating magnitude of every x,y point and return it all in a vector
