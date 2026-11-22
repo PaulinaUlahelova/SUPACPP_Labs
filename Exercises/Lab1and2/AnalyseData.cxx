@@ -5,75 +5,12 @@ Assignment 1 */
 
 //The following is like importing libraries in python
 #include <iostream>     //gives printing and input (std::cout)
-#include <cmath>        //gives me ''advanced'' math operations
 #include <fstream>      //for reading files (std::ifstream)
-#include <string>       //so we can work with strings (std::string and getline)
-#include <vector>       //so we can work with vectors
 
-// FUNCTIONS - defined above main{} so main knows they exist
-bool readData(std::string filename, std::vector<double>& x, std::vector<double>& y){
-    
-    //creating input file stream and opening it
-    //this action only connects to the file, it doesnt read it
-    std::ifstream dataFile(filename);
+//must let main{} know the functions exist:
+//it also contains other #include "libraries"
+#include "CustomFunctions.h" //contains all the functions declared
 
-    //must check if its loading the file, if not print error
-    if (!dataFile.is_open()){
-        std::cout <<"Error opening file: " << filename  << std::endl;
-        return false;
-    }
-    
-    //hold a line of the file at a time
-    std::string line;
-    
-    //read the header line x,y and then dont use it
-    std::getline(dataFile, line);
-
-    //at each line, split it at comma, convert to numbers then store
-    //reading the lines one by one
-    while (std::getline(dataFile, line)){
-        //find where the comma is in the line
-        int commaPosition = line.find(',');
-        //text before comma is x, text after is y
-        x.push_back(std::stod(line.substr(0, commaPosition)));
-        y.push_back(std::stod(line.substr(commaPosition + 1)));
-    
-    }
-    //need to make sure we close the files
-    dataFile.close();
-    return true;
-}
-
-//print the first n data points and if n is too big, give warning and print first 5
-void printData(std::vector<double> x, std::vector<double> y, int n){
-
-    if (n>x.size()){
-        std::cout << "Warning: only " << x.size() << " data points, printing the frst 5." << std::endl;
-        n = 5;
-    }
-    
-    //print the stored values from the vectors and not the file
-    for (int i = 0; i < n; i++){
-        std::cout << x[i] << ", " << y[i] << std::endl;
-    }
-}
-
-//calculating magnitude of every x,y point and return it all in a vector
-std::vector<double> calculateMagnitudes(std::vector<double>x, std::vector<double> y){
-    
-    //start with empty vector to fill
-    std::vector<double> magnitudes;
-
-    //then go through every point
-    for (size_t i=0; i<x.size(); i++){
-        //calculate the magnitude of the ith points
-        //equation for magnitude of a vector is |z|=sqrt(x^2+y^2)
-        magnitudes.push_back(std::sqrt(x[i]*x[i] + y[i]*y[i]));
-
-    }
-    // never forget to return the filled vector back to the
-    return magnitudes; 
-}
 //theres always one main for entire code
 int main(){
 
@@ -87,23 +24,38 @@ int main(){
         return -1;
     }
 
-    //asking the user how many lines to print
-    int n;
-    std::cout << "How many lines would you like to print? ";
-    std::cin >> n;
+    //asking the user what they want to do and giving them options
+    int choice;
+    std::cout << "What would you like to do?" << std::endl;
+    std::cout << "1) Print N lines of data." << std::endl;
+    std::cout << "2) Print the magnitude of every data point." << std::endl;
+    std::cout << "Choose option 1 or 2: ";
+    std::cin >> choice;
 
-    printData(x,y,n);
-
-
-    //calculate the magnitude of every point and store it
-    std::vector<double> magnitudes = calculateMagnitudes(x,y);
-
-    //then print them
-    std::cout << "Magnitudes: " << std::endl;
-    for (size_t i=0; i<magnitudes.size(); i++){
-        std::cout << magnitudes[i] << std::endl;
+    if (choice ==1){
+        int n;
+        std::cout << "How many lines of data would you like to print? " << std::endl;
+        std::cin >> n;
+        printData(x,y,n);
     }
 
-    return 0; 
+    else if (choice ==2){
+        //calculate the magnitude of every point and store it
+        std::vector<double> magnitudes = calculateMagnitudes(x,y);
+        //then print them
+        std::cout << "Magnitudes: " << std::endl;
+        for (size_t i=0; i<magnitudes.size(); i++){
+            std::cout << magnitudes[i] << std::endl;
+        }
+     }
+     
+     else {
+        std::cout << "I'm afraid that's not a valid option." << std::endl;
+     }
+    
+    
+    
+    
+     return 0; 
 
 }
