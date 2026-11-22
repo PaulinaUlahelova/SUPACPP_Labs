@@ -8,7 +8,7 @@ Assignment 1 */
 #include <cmath>        //gives me ''advanced'' math operations
 #include <fstream>      //for reading files (std::ifstream)
 #include <string>       //so we can work with strings (std::string and getline)
-#include <vector>
+#include <vector>       //so we can work with vectors
 
 // FUNCTIONS - defined above main{} so main knows they exist
 bool readData(std::string filename, std::vector<double>& x, std::vector<double>& y){
@@ -71,7 +71,7 @@ std::vector<double> calculateMagnitudes(std::vector<double>x, std::vector<double
         magnitudes.push_back(std::sqrt(x[i]*x[i] + y[i]*y[i]));
 
     }
-    // never forget to return the filled vector back to the main
+    // never forget to return the filled vector back to the
     return magnitudes; 
 }
 //theres always one main for entire code
