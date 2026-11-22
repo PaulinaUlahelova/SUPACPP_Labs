@@ -29,7 +29,8 @@ int main(){
     std::cout << "What would you like to do?" << std::endl;
     std::cout << "1) Print N lines of data." << std::endl;
     std::cout << "2) Print the magnitude of every data point." << std::endl;
-    std::cout << "Choose option 1 or 2: ";
+    std::cout << "3) Fit a straight line to the data." << std::endl;
+    std::cout << "Choose option 1, 2 or 3: ";
     std::cin >> choice;
 
     if (choice ==1){
@@ -47,6 +48,12 @@ int main(){
         for (size_t i=0; i<magnitudes.size(); i++){
             std::cout << magnitudes[i] << std::endl;
         }
+     }
+
+     else if (choice ==3){
+        //empty variables that will be filled
+        double p, q;        
+        fitLine(x,y,p,q);
      }
      
      else {

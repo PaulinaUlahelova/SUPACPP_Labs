@@ -25,3 +25,6 @@ void printData(std::vector<double> x, std::vector<double> y, int n);
 
 //calculating magnitude of every x,y point and return it all in a vector
 std::vector<double> calculateMagnitudes(std::vector<double>x, std::vector<double> y);
+
+//straight line fit y= px + q to the data using least squares
+void fitLine(std::vector<double> x, std::vector<double> y, double& p, double& q);

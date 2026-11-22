@@ -83,3 +83,37 @@ std::vector<double> calculateMagnitudes(std::vector<double>x, std::vector<double
     // never forget to return the filled vector back to the
     return magnitudes; 
 }
+
+//straight line fit y= px + q to the data using least squares
+void fitLine(std::vector<double> x, std::vector<double> y, double& p, double& q){
+    //stored as a double so the division below is not integer division
+    double N = x.size();
+
+    //the four sums the formulas need, all starting 0
+    double sumX = 0;
+    double sumY = 0;
+    double sumXY = 0;
+    double sumXX = 0;
+
+    //add each point's contribution to the sum
+    for (size_t i=0; i< x.size(); i++){
+        sumX += x[i];       //add this point's x
+        sumY += y[i];       // add this point's y
+        sumXY += x[i]*y[i]; //add x times y for this point
+        sumXX += x[i]*x[i]; //add x squared for this point
+    }
+
+    //lest squares formula given in assignment
+    double denominator = N*sumXX - sumX*sumX;
+    p = (N*sumXY - sumX*sumY) / denominator;
+    q = (sumXX*sumY - sumXY*sumX) / denominator;
+
+    //print the result
+    std::cout << "Best fot line: y = " << p << "x + " << q << std::endl;
+
+    //save the result to a file
+    std::ofstream outFile("straightlinefit_result.txt");
+    outFile << "y = " << p << "x + " << q << std::endl;
+    outFile.close();
+
+}
