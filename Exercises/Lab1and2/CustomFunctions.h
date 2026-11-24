@@ -32,5 +32,9 @@ void print(std::string text);
 //calculating magnitude of every x,y point and return it all in a vector
 std::vector<double> calculateMagnitudes(std::vector<double>x, std::vector<double> y);
 
+//chi squared per degree of freedom for the straight line y=px+q
+//where sigma hold the error on each y value
+double calculateChiSquared(std::vector<double> x, std::vector<double> y, std::vector<double> sigma, double p, double q);
+
 //straight line fit y= px + q to the data using least squares
 void fitLine(std::vector<double> x, std::vector<double> y, double& p, double& q);

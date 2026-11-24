@@ -111,6 +111,30 @@ std::vector<double> calculateMagnitudes(std::vector<double>x, std::vector<double
     return magnitudes; 
 }
 
+//chi squared per degree of freedom for the straight line y=px+q
+//where sigma hold the error on each y value
+double calculateChiSquared(std::vector<double> x, std::vector<double> y, std::vector<double> sigma, double p, double q){
+
+    double chiSquared = 0;
+
+    for (size_t i = 0; i< x.size();i++){
+        //what the line predicts at x[i] i.e. what should y be at this x
+        //px+q
+        double expected = p*x[i] + q;
+        //observed minus expected -> how far is the real point from the line
+        //i.e. real y minus the line's prediction
+        //this is O-E in the chi squared equation
+        double difference = y[i]- expected;
+        //equation for chi squared = (O-E)^2 / sigma^2
+        chiSquared += (difference*difference) / (sigma[i]*sigma[i]);
+
+    }
+
+    //Number of degrees of freedom = number of points minus 2 fit parameters
+    double NDoF = x.size() - 2;
+    return chiSquared / NDoF;
+}
+
 //straight line fit y= px + q to the data using least squares
 void fitLine(std::vector<double> x, std::vector<double> y, double& p, double& q){
     //stored as a double so the division below is not integer division
@@ -135,12 +159,25 @@ void fitLine(std::vector<double> x, std::vector<double> y, double& p, double& q)
     p = (N*sumXY - sumX*sumY) / denominator;
     q = (sumXX*sumY - sumXY*sumX) / denominator;
 
-    //print the result
-    std::cout << "Best fot line: y = " << p << "x + " << q << std::endl;
+    //read the errors
+    //errorY gives sigma for each y value
+    std::vector<double> errorX;
+    std::vector<double> errorY;
+    if (!readData("error2D_float.txt", errorX, errorY)){
+        return;    
+    }
+
+    double chi2NDoF = calculateChiSquared(x, y, errorY, p ,q);
+    
+    //build the result as a text so it is printed and saved the same way
+    std::string equation = "y = " + std::to_string(p) + "x + " + std::to_string(q) + ", chi2/NDoF = " + std::to_string(chi2NDoF);
+
+    //print the result using print version 3
+    print(equation);
 
     //save the result to a file
     std::ofstream outFile("straightlinefit_result.txt");
-    outFile << "y = " << p << "x + " << q << std::endl;
+    outFile << equation << std::endl;
     outFile.close();
 
 }
