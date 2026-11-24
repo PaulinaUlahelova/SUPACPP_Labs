@@ -135,6 +135,35 @@ double calculateChiSquared(std::vector<double> x, std::vector<double> y, std::ve
     return chiSquared / NDoF;
 }
 
+//calculating x^y (base^exponent) by recursion: x^n = x* x^(n-1) and stopping at x^0=1
+double power(double base, int exponent){
+    //base case: anything to the power of 0 is equal to 1
+    if (exponent == 0){
+        return 1;
+    }
+
+    //recursive step:one x times the power one lower
+    return base * power( base,exponent-1);
+}
+
+//calculating x^y for every point from index i onwards using recursion instead of loop
+void calculatePowers(std::vector<double> x, std::vector<double> y, size_t i, std::vector<double>& powers){
+
+    //base case - if no points are left, stop
+    if (i ==x.size()){
+        return;
+    }
+
+    //round y to the nearest whole number
+    int roundedY = static_cast<int>(std::round(y[i]));
+
+    //work out this point's x^y and store it
+    powers.push_back(power(x[i], roundedY));
+
+    //recursive step - do the same for the next point
+    calculatePowers(x, y, i+1, powers);
+}
+
 //straight line fit y= px + q to the data using least squares
 void fitLine(std::vector<double> x, std::vector<double> y, double& p, double& q){
     //stored as a double so the division below is not integer division

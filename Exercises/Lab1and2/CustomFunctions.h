@@ -36,5 +36,11 @@ std::vector<double> calculateMagnitudes(std::vector<double>x, std::vector<double
 //where sigma hold the error on each y value
 double calculateChiSquared(std::vector<double> x, std::vector<double> y, std::vector<double> sigma, double p, double q);
 
+//calculating x^y (base^exponent) by recursion: x^n = x* x^(n-1) and stopping at x^0=1
+double power(double base, int exponent);
+
+//calculating x^y for every point from index i onwards using recursion instead of loop
+void calculatePowers(std::vector<double> x, std::vector<double> y, size_t i, std::vector<double>& powers);
+
 //straight line fit y= px + q to the data using least squares
 void fitLine(std::vector<double> x, std::vector<double> y, double& p, double& q);

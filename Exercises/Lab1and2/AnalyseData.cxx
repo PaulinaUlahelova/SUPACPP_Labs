@@ -14,7 +14,6 @@ Assignment 1 */
 //theres always one main for entire code
 int main(){
 
-
     //empty vectors that readData will fill
     std::vector<double> x;
     std::vector<double> y;
@@ -30,7 +29,8 @@ int main(){
     std::cout << "1) Print N lines of data." << std::endl;
     std::cout << "2) Print the magnitude of every data point." << std::endl;
     std::cout << "3) Fit a straight line to the data." << std::endl;
-    std::cout << "Choose option 1, 2 or 3: ";
+    std::cout << "4) Calculate x^y for each data point." <<std::endl;
+    std::cout << "Choose option 1, 2, 3 or 4: ";
     std::cin >> choice;
 
     if (choice ==1){
@@ -47,8 +47,7 @@ int main(){
         //then print them
         std::cout << "Magnitudes: " << std::endl;
         //print version 2
-        print(magnitudes);
-        
+        print(magnitudes);  
      }
 
      else if (choice ==3){
@@ -57,14 +56,19 @@ int main(){
         //prints with version 3 inside
         fitLine(x,y,p,q);
      }
+
+     else if (choice ==4){
+        //empty vector that calculatePowers fills
+        std::vector<double> powers;
+        calculatePowers(x, y, 0, powers); //start at point 0
+        std::cout << "x^y values:" << std::endl;
+        //print version 2, same as magnitudes
+        print(powers);
+     }
      
      else {
         std::cout << "I'm afraid that's not a valid option." << std::endl;
      }
     
-    
-    
-    
      return 0; 
-
 }
