@@ -69,11 +69,6 @@ void print(std::vector<double> x, std::vector<double> y, int n){
         n = 5;
     }
     
-    if (n>x.size()){
-        std::cout << "Warning: only " << x.size() << " data points, printing the frst 5." << std::endl;
-        n = 5;
-    }
-    
     //print the stored values from the vectors and not the file
     for (int i = 0; i < n; i++){
         std::cout << x[i] << ", " << y[i] << std::endl;
@@ -92,6 +87,41 @@ void print(std::vector<double> values){
 //print single line of text (fit eq.)
 void print(std::string text){
     std::cout << text << std::endl;
+}
+
+//SAVE VERSION 1: writes every value in a vector to a file, one per line
+void save(std::vector<double> values, std::string filename){
+    
+    std::ofstream outFile(filename);
+
+    //check the file could be created
+    if (!outFile.is_open()){
+        std::cout << "ERROR! Could not create " << filename << std::endl;
+        return;
+    }
+
+    for (size_t i=0; i<values.size(); i++){
+        outFile << values[i] << std::endl;
+    }
+
+    outFile.close();
+    std::cout << "Saved to " << filename << std::endl;
+}
+
+//SAVE VERSION 2 - writes a single line of text to a file
+void save(std::string text, std::string filename){
+
+    std::ofstream outFile(filename);
+
+    if (!outFile.is_open()){
+        std::cout << "ERROR! Could not create " << filename << std::endl;
+        return;
+    }
+
+    outFile << text << std::endl;
+
+    outFile.close();
+    std::cout << "Saved to " << filename << std::endl;
 }
 
 //calculating magnitude of every x,y point and return it all in a vector
@@ -165,7 +195,7 @@ void calculatePowers(std::vector<double> x, std::vector<double> y, size_t i, std
 }
 
 //straight line fit y= px + q to the data using least squares
-void fitLine(std::vector<double> x, std::vector<double> y, double& p, double& q){
+std::string fitLine(std::vector<double> x, std::vector<double> y, double& p, double& q){
     //stored as a double so the division below is not integer division
     double N = x.size();
 
@@ -193,7 +223,7 @@ void fitLine(std::vector<double> x, std::vector<double> y, double& p, double& q)
     std::vector<double> errorX;
     std::vector<double> errorY;
     if (!readData("error2D_float.txt", errorX, errorY)){
-        return;    
+        return "FIT FAILED: Could not read error2D_float.txt";    
     }
 
     double chi2NDoF = calculateChiSquared(x, y, errorY, p ,q);
@@ -204,9 +234,6 @@ void fitLine(std::vector<double> x, std::vector<double> y, double& p, double& q)
     //print the result using print version 3
     print(equation);
 
-    //save the result to a file
-    std::ofstream outFile("straightlinefit_result.txt");
-    outFile << equation << std::endl;
-    outFile.close();
-
+    //hand the result back so main can save it
+    return equation;
 }

@@ -6,6 +6,7 @@ Assignment 1 */
 //The following is like importing libraries in python
 #include <iostream>     //gives printing and input (std::cout)
 #include <vector>       //gives vectors (std::vector)
+#include <string>
 
 //must let main{} know the functions exist:
 //it also contains other #include "libraries"
@@ -47,14 +48,16 @@ int main(){
         //then print them
         std::cout << "Magnitudes: " << std::endl;
         //print version 2
-        print(magnitudes);  
+        print(magnitudes);
+        save(magnitudes, "magnitudes.txt");  
      }
 
      else if (choice ==3){
         //empty variables that will be filled
         double p, q;        
-        //prints with version 3 inside
-        fitLine(x,y,p,q);
+        //prints with version 3 inside, and returns the result
+        std::string fitResult = fitLine(x,y,p,q);
+        save(fitResult, "straightline_fit.txt");
      }
 
      else if (choice ==4){
@@ -64,6 +67,7 @@ int main(){
         std::cout << "x^y values:" << std::endl;
         //print version 2, same as magnitudes
         print(powers);
+        save(powers, "powers_xy.txt");
      }
      
      else {

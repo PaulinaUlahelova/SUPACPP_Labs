@@ -29,6 +29,14 @@ void print(std::vector<double> values);
 //print line of text
 void print(std::string text);
 
+//SAVE: 2 overloads, chosen by what is passed in
+
+//SAVE VERSION 1: writes every value in a vector to a file, one per line
+void save(std::vector<double> values, std::string filename);
+
+//SAVE VERSION 2 - writes a single line of text to a file
+void save(std::string text, std::string filename);
+
 //calculating magnitude of every x,y point and return it all in a vector
 std::vector<double> calculateMagnitudes(std::vector<double>x, std::vector<double> y);
 
@@ -43,4 +51,4 @@ double power(double base, int exponent);
 void calculatePowers(std::vector<double> x, std::vector<double> y, size_t i, std::vector<double>& powers);
 
 //straight line fit y= px + q to the data using least squares
-void fitLine(std::vector<double> x, std::vector<double> y, double& p, double& q);
+std::string fitLine(std::vector<double> x, std::vector<double> y, double& p, double& q);
