@@ -1,16 +1,19 @@
 /* Paulina Ulahelova
-18/11/2026
+25/11/2026
 C++ SUPA COURSE
-Assignment 1 */
+Assignment 1 
+
+Build with: make
+Run with: ./AnalyseData
+*/
 
 // The following is like importing libraries in python
 #include <iostream> //gives printing and input (std::cout)
 #include <vector>   //gives vectors (std::vector)
-#include <string>
+#include <string>   //(std::string)
 
-// must let main{} know the functions exist:
-// it also contains other #include "libraries"
-#include "CustomFunctions.h" //contains all the functions declared
+// my header: declares the custom functions (their code can be found in CustomFunctions.cxx)
+#include "CustomFunctions.h"
 
 // theres always one main for entire code
 int main()
@@ -23,6 +26,7 @@ int main()
    // read the file and if it fails then stop
    if (!readData("input2D_float.txt", x, y))
    {
+      // non zero - tells the system something went wrong
       return -1;
    }
 
@@ -42,6 +46,8 @@ int main()
       std::cout << "Choose option 0, 1, 2, 3 or 4: ";
       std::cin >> choice;
 
+      // switch: runs the case matching the user's choice
+      // break: ends that case 
       switch (choice)
       {
 
@@ -63,16 +69,18 @@ int main()
          std::cout << "Magnitudes: " << std::endl;
          // print version 2
          print(magnitudes);
+         // save the results to a file (save version 1 for vectors)
          save(magnitudes, "magnitudes.txt");
          break;
       }
 
       case 3:
       {
-         // empty variables that will be filled
+         // p, q are filled in by the fitLine (passed by reference)
          double p, q;
          // prints with version 3 inside, and returns the result
          std::string fitResult = fitLine(x, y, p, q);
+         // save the results to a file (save version 2 for text)
          save(fitResult, "straightline_fit.txt");
          break;
       }
@@ -85,6 +93,7 @@ int main()
          std::cout << "x^y values:" << std::endl;
          // print version 2, same as magnitudes
          print(powers);
+         // save version 1
          save(powers, "powers_xy.txt");
          break;
       }
@@ -95,6 +104,7 @@ int main()
          running = false;
          break;
 
+      // default: catches anything that matches no case
       default:
          std::cout << "I'm afraid that's not a valid option." << std::endl;
          break;
